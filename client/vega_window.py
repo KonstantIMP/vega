@@ -1,10 +1,12 @@
 from PyQt5.QtWidgets import QMainWindow, QGridLayout
-from PyQt5.QtWidgets import QLabel, QPushButton
-from PyQt5.QtWidgets import QWidget
 from PyQt5.QtMultimedia import QCamera, QCameraInfo
+from PyQt5.QtWidgets import QWidget, QMessageBox
+from PyQt5.QtWidgets import QLabel, QPushButton
 from PyQt5.QtGui import QPixmap, QIcon
 from PyQt5.QtCore import QSize
 from PyQt5.QtCore import Qt
+
+from sys import exit
 
 import resources
 
@@ -19,7 +21,9 @@ class VegaMainWindow(QMainWindow) :
         
         self.auth_btn = QPushButton('Authorize')
 
-        print(QCameraInfo.availableCameras())
+        if len(QCameraInfo.availableCameras()) == 0 :
+            QMessageBox.warning(self, 'Camera not found', 'You don\'t have any cameras on your computer so you can\'t use this app...\nBuy a new camera (╯°^°)╯┻━┻', QMessageBox.Ok)
+            exit(-1)
 
     def createUI(self) :
         self.setWindowIcon(QIcon(QPixmap(':/kimp_img/vega.png')))
