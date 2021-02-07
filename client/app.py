@@ -1,4 +1,4 @@
-from PyQt6.QtWidgets import QApplication
+from PyQt5.QtWidgets import QApplication
 from vega_window import VegaMainWindow
 
 if __name__ == '__main__' :
