@@ -1,5 +1,6 @@
 from PyQt5.QtWidgets import QMainWindow, QGridLayout
 from PyQt5.QtMultimedia import QCamera, QCameraInfo
+from PyQt5.QtWidgets import QGroupBox, QComboBox
 from PyQt5.QtMultimediaWidgets import QCameraViewfinder 
 from PyQt5.QtWidgets import QWidget, QMessageBox
 from PyQt5.QtWidgets import QLabel, QPushButton
@@ -18,7 +19,7 @@ class VegaMainWindow(QMainWindow) :
         self.central_w = QWidget(self)
         self.main_grid = QGridLayout()
 
-        self.welcome_msg = QLabel('Welcome!')
+        self.option_group = QGroupBox(self.central_w)
         
         self.auth_btn = QPushButton('Authorize')
 
@@ -34,14 +35,44 @@ class VegaMainWindow(QMainWindow) :
         self.setStyleSheet('background-color: #2d313d;')
         self.setWindowTitle('Vega')
 
+        self.option_group.setTitle('Options')
+        self.option_group.setStyleSheet(
+        'QGroupBox {'
+        '   border: 2px solid #e8324f;'
+        '   border-radius: 7px;'
+        '}'
+        'QGroupBox::title {'
+        '   color: #ffffff;'
+        '   font-size: 16px;'
+        '   padding-top: -8px;'
+        '   padding-left: 0px;'
+        '}')
+        self.main_grid.addWidget(self.option_group, 0, 0, 2, 5)
+
+
         self.camera.setViewfinder(self.camera_w)
         self.camera.setCaptureMode(QCamera.CaptureMode.CaptureStillImage)
 
-        #self.camera_w.show()
 
-        self.main_grid.addWidget(self.welcome_msg, 0, 0, 1, 5)
         
-        self.main_grid.addWidget(self.camera_w, 2, 0, 5, 5)
+        self.auth_btn.setStyleSheet(
+        'QPushButton{'
+        '   font-size: 14px;'
+        '   background-color: #2d313d;'
+        '   color: #ffffff;'
+        '   border-radius: 8px;'
+        '   border: 2px solid #e8324f;'
+        '}'
+        'QPushButton:hover{'
+        '   background-color: #ffffff;'
+        '   color: #2d313d;'
+        '}'
+        'QPushButton:pressed{'
+        '   background-color: #ffffff;'
+        '   color: #e8324f;'
+        '   border-color: #ffffff;'
+        '}')        
+
         self.main_grid.addWidget(self.auth_btn, 7, 0, 1, 5)
 
         self.central_w.setLayout(self.main_grid)
