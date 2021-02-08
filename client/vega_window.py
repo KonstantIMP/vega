@@ -1,5 +1,6 @@
 from PyQt5.QtWidgets import QMainWindow, QGridLayout
 from PyQt5.QtMultimedia import QCamera, QCameraInfo
+from PyQt5.QtMultimediaWidgets import QCameraViewfinder 
 from PyQt5.QtWidgets import QWidget, QMessageBox
 from PyQt5.QtWidgets import QLabel, QPushButton
 from PyQt5.QtGui import QPixmap, QIcon
@@ -25,14 +26,23 @@ class VegaMainWindow(QMainWindow) :
             QMessageBox.warning(self, 'Camera not found', 'You don\'t have any cameras on your computer so you can\'t use this app...\nBuy a new camera (╯°^°)╯┻━┻', QMessageBox.Ok)
             exit(-1)
 
+        self.camera = QCamera(QCameraInfo.defaultCamera())
+        self.camera_w = QCameraViewfinder()
+
     def createUI(self) :
         self.setWindowIcon(QIcon(QPixmap(':/kimp_img/vega.png')))
         self.setStyleSheet('background-color: #2d313d;')
         self.setWindowTitle('Vega')
 
+        self.camera.setViewfinder(self.camera_w)
+        self.camera.setCaptureMode(QCamera.CaptureMode.CaptureStillImage)
+
+        #self.camera_w.show()
+
         self.main_grid.addWidget(self.welcome_msg, 0, 0, 1, 5)
         
-        self.main_grid.addWidget(self.auth_btn, 6, 0, 1, 5)
+        self.main_grid.addWidget(self.camera_w, 2, 0, 5, 5)
+        self.main_grid.addWidget(self.auth_btn, 7, 0, 1, 5)
 
         self.central_w.setLayout(self.main_grid)
         self.setCentralWidget(self.central_w)        
