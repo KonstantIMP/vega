@@ -31,9 +31,13 @@ class VegaMainWindow(QMainWindow) :
         self.camera_combo = QComboBox()
         self.addr_edit = QLineEdit()
 
-        self.camera_place = QGroupBox()
+        self.camera_place = QGroupBox(None)
 
         self.auth_btn = QPushButton('Log in')
+        self.camera_grid = QGridLayout(self.camera_place)
+
+        self.camera_widget = QCameraViewfinder()
+        self.camera_obj = QCamera(QCameraInfo.defaultCamera())
 
     def createUI(self) :
         self.setWindowIcon(QIcon(QPixmap(':/kimp_img/vega.png')))
@@ -54,11 +58,19 @@ class VegaMainWindow(QMainWindow) :
         self.option_group.setTitle('Option')
         self.main_grid.addWidget(self.option_group, 0, 0, 2, 5)
 
+        self.camera_grid.addWidget(self.camera_widget, 0, 0, 5, 5)
+
         self.camera_place.setTitle('Camera')
         self.main_grid.addWidget(self.camera_place, 2, 0, 5, 5)
 
+        self.camera_obj.setViewfinder(self.camera_widget)
         self.main_grid.addWidget(self.auth_btn, 7, 0, 1, 5)
 
         self.central_widget.setLayout(self.main_grid)
         self.setCentralWidget(self.central_widget)
         self.show()
+
+    def cameraStart(self) :
+        if self.camera_obj.status() != QCamera.UnavailableStatus :
+            print('Camera started')
+            self.camera_obj.start()
