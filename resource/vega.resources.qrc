@@ -1,5 +1,6 @@
 <RCC>
   <qresource prefix="kimp_img">
+    <file>arrow.png</file>
     <file>vega.png</file>
   </qresource>
 </RCC>

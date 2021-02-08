@@ -1,5 +1,6 @@
 from PyQt5.QtWidgets import QMainWindow, QGridLayout
 from PyQt5.QtMultimedia import QCamera, QCameraInfo
+from PyQt5.QtWidgets import QLineEdit
 from PyQt5.QtWidgets import QGroupBox, QComboBox
 from PyQt5.QtMultimediaWidgets import QCameraViewfinder 
 from PyQt5.QtWidgets import QWidget, QMessageBox
@@ -11,71 +12,53 @@ from PyQt5.QtCore import Qt
 from sys import exit
 
 import resources
+import styles
 
 class VegaMainWindow(QMainWindow) :
     def __init__(self) :
         QMainWindow.__init__(self)
 
-        self.central_w = QWidget(self)
-        self.main_grid = QGridLayout()
+        self.central_widget = QWidget(self)
+        self.main_grid = QGridLayout(self.central_widget)
 
-        self.option_group = QGroupBox(self.central_w)
-        
-        self.auth_btn = QPushButton('Authorize')
+        self.option_group = QGroupBox(None)
 
-        if len(QCameraInfo.availableCameras()) == 0 :
-            QMessageBox.warning(self, 'Camera not found', 'You don\'t have any cameras on your computer so you can\'t use this app...\nBuy a new camera (╯°^°)╯┻━┻', QMessageBox.Ok)
-            exit(-1)
+        self.group_grid = QGridLayout(self.option_group)
 
-        self.camera = QCamera(QCameraInfo.defaultCamera())
-        self.camera_w = QCameraViewfinder()
+        self.addr_msg = QLabel('Database addr')
+        self.camera_msg = QLabel('Camera')
+
+        self.camera_combo = QComboBox()
+        self.addr_edit = QLineEdit()
+
+        self.camera_place = QGroupBox()
+
+        self.auth_btn = QPushButton('Log in')
 
     def createUI(self) :
         self.setWindowIcon(QIcon(QPixmap(':/kimp_img/vega.png')))
-        self.setStyleSheet('background-color: #2d313d;')
+        self.setStyleSheet(styles.global_css)
         self.setWindowTitle('Vega')
 
-        self.option_group.setTitle('Options')
-        self.option_group.setStyleSheet(
-        'QGroupBox {'
-        '   border: 2px solid #e8324f;'
-        '   border-radius: 7px;'
-        '}'
-        'QGroupBox::title {'
-        '   color: #ffffff;'
-        '   font-size: 16px;'
-        '   padding-top: -8px;'
-        '   padding-left: 0px;'
-        '}')
+        self.group_grid.addWidget(self.addr_msg, 0, 0, 1, 2)
+        self.group_grid.addWidget(self.camera_msg, 1, 0, 1, 2)
+
+        self.addr_edit.setAlignment(Qt.AlignRight)
+        self.group_grid.addWidget(self.addr_edit, 0, 2, 1, 5)
+
+        for i in QCameraInfo.availableCameras() :
+            self.camera_combo.addItem(i.deviceName())
+        self.camera_combo.setCurrentText(QCameraInfo.defaultCamera().deviceName())
+        self.group_grid.addWidget(self.camera_combo, 1, 2, 1, 5)
+
+        self.option_group.setTitle('Option')
         self.main_grid.addWidget(self.option_group, 0, 0, 2, 5)
 
-
-        self.camera.setViewfinder(self.camera_w)
-        self.camera.setCaptureMode(QCamera.CaptureMode.CaptureStillImage)
-
-
-        
-        self.auth_btn.setStyleSheet(
-        'QPushButton{'
-        '   font-size: 14px;'
-        '   background-color: #2d313d;'
-        '   color: #ffffff;'
-        '   border-radius: 8px;'
-        '   border: 2px solid #e8324f;'
-        '}'
-        'QPushButton:hover{'
-        '   background-color: #ffffff;'
-        '   color: #2d313d;'
-        '}'
-        'QPushButton:pressed{'
-        '   background-color: #ffffff;'
-        '   color: #e8324f;'
-        '   border-color: #ffffff;'
-        '}')        
+        self.camera_place.setTitle('Camera')
+        self.main_grid.addWidget(self.camera_place, 2, 0, 5, 5)
 
         self.main_grid.addWidget(self.auth_btn, 7, 0, 1, 5)
 
-        self.central_w.setLayout(self.main_grid)
-        self.setCentralWidget(self.central_w)        
-
+        self.central_widget.setLayout(self.main_grid)
+        self.setCentralWidget(self.central_widget)
         self.show()
