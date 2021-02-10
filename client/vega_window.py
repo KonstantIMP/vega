@@ -20,6 +20,10 @@ class VegaMainWindow(QMainWindow) :
     def __init__(self) :
         QMainWindow.__init__(self)
 
+        if len(QCameraInfo.availableCameras()) == 0 :
+            QMessageBox.warning(self, 'Camera not found', 'You don\'t have any cameras on your computer so you can\'t use this app...\nBuy a new camera (╯°^°)╯┻━┻', QMessageBox.Ok)
+            exit(-1)
+
         self.central_widget = QWidget(self)
         self.main_grid = QGridLayout(self.central_widget)
 
@@ -47,8 +51,6 @@ class VegaMainWindow(QMainWindow) :
         self.setWindowIcon(QIcon(QPixmap(':/kimp_img/vega.png')))
         self.setStyleSheet(styles.global_css)
         self.setWindowTitle('Vega')
-
-        
 
         self.camera_grid.addWidget(self.camera_widget, 0, 0, 5, 5)
 
