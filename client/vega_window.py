@@ -11,6 +11,8 @@ from PyQt5.QtCore import Qt
 
 from sys import exit
 
+from config import *
+
 import resources
 import styles
 
@@ -39,24 +41,14 @@ class VegaMainWindow(QMainWindow) :
         self.camera_widget = QCameraViewfinder()
         self.camera_obj = QCamera(QCameraInfo.defaultCamera())
 
+        self.veg_cfg = Config()
+
     def createUI(self) :
         self.setWindowIcon(QIcon(QPixmap(':/kimp_img/vega.png')))
         self.setStyleSheet(styles.global_css)
         self.setWindowTitle('Vega')
 
-        self.group_grid.addWidget(self.addr_msg, 0, 0, 1, 2)
-        self.group_grid.addWidget(self.camera_msg, 1, 0, 1, 2)
-
-        self.addr_edit.setAlignment(Qt.AlignRight)
-        self.group_grid.addWidget(self.addr_edit, 0, 2, 1, 5)
-
-        for i in QCameraInfo.availableCameras() :
-            self.camera_combo.addItem(i.deviceName())
-        self.camera_combo.setCurrentText(QCameraInfo.defaultCamera().deviceName())
-        self.group_grid.addWidget(self.camera_combo, 1, 2, 1, 5)
-
-        self.option_group.setTitle('Option')
-        self.main_grid.addWidget(self.option_group, 0, 0, 2, 5)
+        
 
         self.camera_grid.addWidget(self.camera_widget, 0, 0, 5, 5)
 
@@ -69,6 +61,25 @@ class VegaMainWindow(QMainWindow) :
         self.central_widget.setLayout(self.main_grid)
         self.setCentralWidget(self.central_widget)
         self.show()
+
+    def initValues(self) :
+        self.addr_edit.setText(self.veg_cfg.get_db_addr())
+
+        if self.veg_cfg.get_debug() == True :
+            self.group_grid.addWidget(self.addr_msg, 0, 0, 1, 2)
+            self.group_grid.addWidget(self.camera_msg, 1, 0, 1, 2)
+
+            self.addr_edit.setAlignment(Qt.AlignRight)
+            self.group_grid.addWidget(self.addr_edit, 0, 2, 1, 5)
+
+            for i in QCameraInfo.availableCameras() :
+                self.camera_combo.addItem(i.deviceName())
+            self.camera_combo.setCurrentText(QCameraInfo.defaultCamera().deviceName())
+            self.group_grid.addWidget(self.camera_combo, 1, 2, 1, 5)
+
+            self.option_group.setTitle('Option')
+            self.main_grid.addWidget(self.option_group, 0, 0, 2, 5)
+        else : self.option_group.hide()
 
     def cameraStart(self) :
         if self.camera_obj.status() != QCamera.UnavailableStatus :
