@@ -98,5 +98,5 @@ class VegaMainWindow(QMainWindow) :
     @pyqtSlot()
     def onLogInClicked(self) :
         capture = QCameraImageCapture(self.camera_obj)
-        capture.capture('capture.jpg')
-        print('ok')
+        capture.capture(__file__[:-14:] + 'capture.jpg')
+        
