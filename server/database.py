@@ -19,7 +19,7 @@ class Database :
 
     @orm.db_session
     def get_user(self, user_surname) :
-        user = self.Person.get(surname='Михедов')
+        user = self.Person.get(surname=user_surname)
 
         if user : return jsonify({'status' : 'ok', 'name' : user.name, 'surname' : user.surname, 'patronymic' : user.patronymic, 'login' : user.login, 'passwd' : user.passwd})
         else : return jsonify({'status' : 'error'})
