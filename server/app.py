@@ -3,6 +3,7 @@ from flask import Flask, request, jsonify
 from os import path
 import json
 
+import database
 import nn
 
 app = Flask(__name__)
@@ -22,9 +23,10 @@ def get_img() :
 
     if name == False :
         return jsonify({'status': 'error'})
-    print(name)
+    
+    db = database.Database(data['db_host'], data['db_user'], data['db_password'], data['db_name'])
 
-    return jsonify({'msg': 'success'})
+    return db.get_user(name)
 
 if __name__ == "__main__":
     print('[DEBUG] Server is starting...')
