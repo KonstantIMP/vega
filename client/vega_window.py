@@ -1,20 +1,23 @@
 from PyQt5.QtWidgets import QMainWindow, QGridLayout
-from PyQt5.QtMultimedia import QCamera, QCameraInfo
+from PyQt5.QtMultimedia import QCamera, QCameraInfo, QCameraImageCapture
 from PyQt5.QtWidgets import QLineEdit
 from PyQt5.QtWidgets import QGroupBox, QComboBox
 from PyQt5.QtMultimediaWidgets import QCameraViewfinder 
 from PyQt5.QtWidgets import QWidget, QMessageBox
 from PyQt5.QtWidgets import QLabel, QPushButton
 from PyQt5.QtGui import QPixmap, QIcon
+from PyQt5.QtCore import pyqtSlot
 from PyQt5.QtCore import QSize
 from PyQt5.QtCore import Qt
 
 from sys import exit
+import os
 
 from config import *
 
 import resources
 import styles
+import auth
 
 class VegaMainWindow(QMainWindow) :
     def __init__(self) :
@@ -66,6 +69,7 @@ class VegaMainWindow(QMainWindow) :
 
     def initValues(self) :
         self.addr_edit.setText(self.veg_cfg.get_db_addr())
+        self.camera_obj.setCaptureMode(QCamera.CaptureStillImage)
 
         if self.veg_cfg.get_debug() == True :
             self.group_grid.addWidget(self.addr_msg, 0, 0, 1, 2)
@@ -83,7 +87,16 @@ class VegaMainWindow(QMainWindow) :
             self.main_grid.addWidget(self.option_group, 0, 0, 2, 5)
         else : self.option_group.hide()
 
+    def connectSignals(self) :
+        self.auth_btn.clicked.connect(self.onLogInClicked)
+
     def cameraStart(self) :
         if self.camera_obj.status() != QCamera.UnavailableStatus :
             print('Camera started')
             self.camera_obj.start()
+
+    @pyqtSlot()
+    def onLogInClicked(self) :
+        capture = QCameraImageCapture(self.camera_obj)
+        capture.capture('capture.jpg')
+        print('ok')

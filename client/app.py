@@ -8,6 +8,7 @@ if __name__ == '__main__' :
     
     vega_client_win.createUI()
     vega_client_win.initValues()
+    vega_client_win.connectSignals()
 
     vega_client_win.cameraStart()
 
