@@ -15,9 +15,13 @@ import os
 
 from config import *
 
+import requests
+
 import resources
 import styles
 import auth
+
+from time import sleep
 
 class VegaMainWindow(QMainWindow) :
     def __init__(self) :
@@ -99,4 +103,10 @@ class VegaMainWindow(QMainWindow) :
     def onLogInClicked(self) :
         capture = QCameraImageCapture(self.camera_obj)
         capture.capture(__file__[:-14:] + 'capture.jpg')
-        
+
+        sleep(1)
+
+        s_data = {'image': open(__file__[:-14:] + 'capture.jpg', 'rb')}
+        r = requests.post(self.veg_cfg.get_db_addr(), files=s_data)
+
+        print(r.json())

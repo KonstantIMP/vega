@@ -4,7 +4,7 @@ import json
 class Config :
     def __init__(self, cfg_name='vega.json') :
         self.debug_mode = False
-        self.db_addr = '0.0.0.0'
+        self.db_addr = 'http://127.0.0.1:5003/verify'
         self.cfg_file = cfg_name
 
         if os.path.isfile(cfg_name) == False : self.__write_changes()
