@@ -3,6 +3,8 @@ from flask import Flask, request, jsonify
 from os import path
 import json
 
+import nn
+
 app = Flask(__name__)
 
 @app.route('/verify', methods=["POST"])
@@ -13,6 +15,12 @@ def get_img() :
     face_img.write(file.read())
     face_img.close()
 
+    name = nn.get_name('face.jpg', 'keras_model.h5', 'labels.txt')
+
+    if name == False :
+        return jsonify({'status': 'error'})
+    print(name)
+
     return jsonify({'msg': 'success'})
 
 if __name__ == "__main__":
@@ -21,7 +29,8 @@ if __name__ == "__main__":
     if not path.exists('config.json') or path.isdir('config.json'):
         def_cfg = {'db_name': 'mos_ru', 'db_host': '127.0.0.1',
                    'db_user': 'root', 'db_password': 'passwd',
-                   'server_port': '5003'}
+                   'server_port': '5003', 'kb_nn' : 'keras_model.h5',
+                   'kb_desc' : 'labels.txt'}
 
         with open('config.json', 'w') as cfg_file:
             json.dump(def_cfg, cfg_file)
