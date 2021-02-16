@@ -1,1 +1,6 @@
 vega.json
+__pycache__
+chromedriver
+geckodriver
+config.json
+capture.jpg

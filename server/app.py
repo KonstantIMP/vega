@@ -9,7 +9,9 @@ app = Flask(__name__)
 def get_img() :
     file = request.files['image']
 
-    print(file.name)
+    face_img = open('face.jpg', 'wb+')
+    face_img.write(file.read())
+    face_img.close()
 
     return jsonify({'msg': 'success'})
 
