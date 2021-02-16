@@ -15,7 +15,10 @@ def get_img() :
     face_img.write(file.read())
     face_img.close()
 
-    name = nn.get_name('face.jpg', 'keras_model.h5', 'labels.txt')
+    with open('config.json', 'r') as cfg_file:
+        data = json.load(cfg_file)
+
+    name = nn.get_name('face.jpg', data['kb_nn'], data['kb_desc'])
 
     if name == False :
         return jsonify({'status': 'error'})
