@@ -1,0 +1,15 @@
+1613546603215	geckodriver	INFO	Listening on 127.0.0.1:41399
+1613546604151	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "--disable-blink-features=AutomationControlled" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofileVaWxCY"
+
+(firefox:8110): Gtk-WARNING **: 10:23:24.195: Theme parsing error: gtk.css:2720:10: 'min-widt' is not a valid property name
+
+(/usr/lib/firefox/firefox:8171): Gtk-WARNING **: 10:23:24.864: Theme parsing error: gtk.css:2720:10: 'min-widt' is not a valid property name
+
+(/usr/lib/firefox/firefox:8180): Gtk-WARNING **: 10:23:24.931: Theme parsing error: gtk.css:2720:10: 'min-widt' is not a valid property name
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1613546605500	Marionette	INFO	Listening on port 44431
+1613546605573	Marionette	WARN	TLS certificate errors will be ignored for this session
+1613546605582	Marionette	ERROR	[15] No reply from Marionette:Register
+
+(/usr/lib/firefox/firefox:8267): Gtk-WARNING **: 10:23:25.866: Theme parsing error: gtk.css:2720:10: 'min-widt' is not a valid property name
+1613546622262	Marionette	INFO	Stopped listening on port 44431
