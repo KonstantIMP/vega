@@ -13,3 +13,22 @@ console.warn: SearchSettings: "get: No settings file exists, new profile?" (new 
 
 (/usr/lib/firefox/firefox:8267): Gtk-WARNING **: 10:23:25.866: Theme parsing error: gtk.css:2720:10: 'min-widt' is not a valid property name
 1613546622262	Marionette	INFO	Stopped listening on port 44431
+1613549098906	geckodriver	INFO	Listening on 127.0.0.1:56875
+1613549098913	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "--disable-blink-features=AutomationControlled" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofilejfF2fT"
+
+(firefox:10631): Gtk-WARNING **: 11:04:58.992: Theme parsing error: gtk.css:2720:10: 'min-widt' is not a valid property name
+
+(/usr/lib/firefox/firefox:10682): Gtk-WARNING **: 11:04:59.625: Theme parsing error: gtk.css:2720:10: 'min-widt' is not a valid property name
+
+(/usr/lib/firefox/firefox:10705): Gtk-WARNING **: 11:04:59.735: Theme parsing error: gtk.css:2720:10: 'min-widt' is not a valid property name
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1613549100644	Marionette	INFO	Listening on port 33189
+
+(/usr/lib/firefox/firefox:10783): Gtk-WARNING **: 11:05:00.688: Theme parsing error: gtk.css:2720:10: 'min-widt' is not a valid property name
+1613549100738	Marionette	WARN	TLS certificate errors will be ignored for this session
+1613549100755	Marionette	ERROR	[18] No reply from Marionette:Register
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1613549117360	Marionette	INFO	Stopped listening on port 33189
+
+###!!! [Parent][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+

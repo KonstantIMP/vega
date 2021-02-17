@@ -8,6 +8,8 @@ import nn
 
 app = Flask(__name__)
 
+db = None
+
 @app.route('/verify', methods=["POST"])
 def get_img() :
     file = request.files['image']
@@ -24,8 +26,6 @@ def get_img() :
     if name == False :
         return jsonify({'status': 'error'})
     
-    db = database.Database(data['db_host'], data['db_user'], data['db_password'], data['db_name'])
-
     return db.get_user(name)
 
 if __name__ == "__main__":
@@ -51,5 +51,7 @@ if __name__ == "__main__":
     print('\tDatabase user      : ' + data['db_user'])
     print('\tDatabase password  : ' + ('*' * len(data['db_password'])))
     print('\tServer port        : ' + data['server_port'])
+
+    db = database.Database(data['db_host'], data['db_user'], data['db_password'], data['db_name'])
 
     app.run(port=data['server_port'])
