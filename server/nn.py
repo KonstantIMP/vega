@@ -2,7 +2,7 @@ import tensorflow.keras
 from PIL import Image, ImageOps
 import numpy as np
 
-def get_name(face_img_file, keras_file, labels_file, min_prob = 0.80) :
+def get_name(face_img_file, keras_file, labels_file, min_prob = 0.95) :
     np.set_printoptions(suppress=True)
     model = tensorflow.keras.models.load_model(keras_file)
     data = np.ndarray(shape=(1, 224, 224, 3), dtype=np.float32)
